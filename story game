@@ -1,0 +1,120 @@
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
+bool gameInProgress = true; 
+
+// encounter with a mysterious character
+void mysteriousCharacter() {
+    cout << "As you journey through the chaotic town, a dark alley catches your attention. ";
+    cout << "In its shadows, a mysterious hooded figure emerges.\n";
+    cout << "The figure offers you a potion for protection. It might kill you. Will you accept (1) or decline (2)?  ";
+
+    int choice;
+    cin >> choice;
+
+    if (choice == 1) {
+        int random = rand() % 3 + 1; 
+      //  cout << random << endl;
+
+        if (random == 3) {
+            cout << "You chose poorly and succumbed to the effects of the mysterious potion. Game Over!\n";
+            gameInProgress = false;  // End the game
+            return;
+        }
+        // Continue with the game if the random number is not 3
+    } else if (choice == 2) {
+        cout << "You decline the offer, and the mysterious figure vanishes without a trace.\n";
+    } else {
+        cout << "Invalid choice. Please enter 1 or 2.\n";
+        mysteriousCharacter();
+    }
+}
+
+// choice of entering a cave
+void enterCave() {
+    cout << "Continuing your journey, you come across a foreboding cave entrance. ";
+    cout << "It seems dark and ominous. Will you enter (1) or continue (2)? ";
+
+    int choice;
+    cin >> choice;
+
+    if (choice == 1) {
+        cout << "Cautiously entering the cave, you discover ancient runes on the walls. ";
+        cout << "A hidden chamber reveals dova, the first dragon word in the walls !\n";
+    } else if (choice == 2) {
+        cout << "Deciding to press on, you avoid the potential dangers of the cave and continue your journey.\n";
+    } else {
+        cout << "Invalid choice. Please enter 1 or 2.\n";
+        enterCave(); // Recursive call to ask for a valid choice
+    }
+}
+
+// choice of ambushing or slipping away from bandits
+void handleBanditChoice() {
+    cout << "As you hide, a group of bandits approaches. They haven't seen you yet.\n";
+    cout << "Do you want to (1) ambush the bandits or (2) slip away quietly? ";
+
+    int choice;
+    cin >> choice;
+
+    if (choice == 1) {
+        cout << "Choosing to ambush the bandits, you launch a surprise attack, catching them off guard.\n";
+        cout << "After the skirmish, you come out on top among the defeated bandits.\n";
+    } else if (choice == 2) {
+        cout << "Opting to slip away silently, you manage to avoid the bandits as they pass by, unaware of your presence.\n";
+    } else {
+        cout << "Invalid choice. Please enter 1 or 2.\n";
+        handleBanditChoice(); // Recursive call to ask for a valid choice
+    }
+}
+
+// Main game function
+void playGame() {
+    int choice;
+
+    // show introduction
+    cout << "Amidst the chaos in the town of Helgen, you find yourself being escorted to your execution by imperial soldiers. ";
+    cout << "Suddenly, a dragon appears, creating havoc. You seize the chance to escape. Choose wisely!\n\n";
+
+    // Main game loop
+    while (gameInProgress) {
+        cout << "What will you do? Enter the number corresponding to your choice:\n";
+        cout << "(1) Go Left\n";
+        cout << "(2) Go Right\n";
+        cout << "(3) Go Forward\n";
+        cout << "(4) Hide\n";
+        cin >> choice;
+
+        if (choice == 1) {
+            cout << "Turning left, you find yourself face-to-face with a fireball hurtling towards you!\n";
+            cout << "You chose poorly and met a fiery demise. Game Over!\n";
+            gameInProgress = false; // End the game
+        } else if (choice == 2) {
+            cout << "Choosing to go right, you continue your journey through the chaotic town.\n";
+            mysteriousCharacter();
+        } else if (choice == 3) {
+            cout << "Bravely moving forward, you navigate through the chaos. Arrows whiz by, and debris falls around you.\n";
+            cout << "You narrowly escape a collapsing building. Your heart pounds, but you've made it through!\n";
+            enterCave();
+        } else if (choice == 4) {
+            handleBanditChoice();
+        } else {
+            cout << "Invalid choice. Please enter 1, 2, 3, or 4.\n";
+        }
+    }
+
+    // Conclusion
+    cout << "\nYou've reached the end of this part of the adventure. ";
+    cout << "Whether you survived or perished, your journey continues. To be continued...\n";
+}
+
+int main() {
+    srand(time(0));
+    // Start the game
+    playGame();
+
+    return 0;
+}
+
